@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import os,hashlib as h,sys,base64 as b64,zlib,json as j,argparse as arg,itertools as it,string as s,time as t
+import os,hashlib as h,sys,base64 as b64,zlib,json as j,argparse as arg,itertools as it,string as s,time as t,git
 try:
   settings={}
   read=[i for i in zlib.decompress(b64.b64decode(open("settings","r").read())).split("\n")]
@@ -54,8 +54,12 @@ def dirHash(directory):
     return -2
   return SHAhash.hexdigest()
 
+if settings['basedir'][-1]!='/':settings['basedir']=settings['basedir']+'/'
+oldHash=dirHash(settings['basedir']+settings['giturl'].split('/')[-1].split('.git')[0])
+
 while True:
-  break
+  if dirHash(settings['basedir']+settings['giturl'].split('/')[-1].split('.git')[0])!=oldHash:
+    pass
 
 ##clone
 ##add
